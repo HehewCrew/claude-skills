@@ -1,0 +1,6 @@
+{
+  "name": "skill-harvest",
+  "version": "1.0.0",
+  "description": "Looks back over a Claude Code session for work worth turning into a skill or agent, proposes the best candidates, and builds only the ones you pick.",
+  "author": { "name": "HehewCrew" }
+}
