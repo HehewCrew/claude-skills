@@ -1,11 +1,27 @@
 {
   "name": "claude-skills",
-  "owner": { "name": "HehewCrew" },
+  "owner": {
+    "name": "HehewCrew"
+  },
   "plugins": [
     {
       "name": "skill-harvest",
       "source": "./plugins/skill-harvest",
       "description": "Looks back over a Claude Code session for work worth turning into a skill or agent, proposes the best candidates, and builds only the ones you pick."
+    },
+    {
+      "name": "pots",
+      "source": "./plugins/pots",
+      "description": "A per-project to-do list that never forgets: stored todos merged with a fresh scan of the project's files, behind an improvement-pot gate; plus a ranking agent."
+    },
+    {
+      "name": "stack-it-right",
+      "source": "./plugins/stack-it-right",
+      "description": "Chooses a stack from the project's requirements and checks every candidate live (latest version, maintenance, pricing) before recommending."
     }
-  ]
+  ],
+  "metadata": {
+    "description": "Workflow skills for Claude Code: skill-harvest, pots (todos + improvement backlog) and stack-it-right.",
+    "version": "1.1.0"
+  }
 }

@@ -1,0 +1,6 @@
+{
+  "name": "stack-it-right",
+  "version": "1.0.0",
+  "description": "Chooses a project's stack from its requirements, in question rounds, and checks every candidate live (latest version, maintenance, pricing) before recommending one traced stack.",
+  "author": { "name": "HehewCrew" }
+}
