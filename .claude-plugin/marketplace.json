@@ -18,10 +18,15 @@
       "name": "stack-it-right",
       "source": "./plugins/stack-it-right",
       "description": "Chooses a stack from the project's requirements and checks every candidate live (latest version, maintenance, pricing) before recommending."
+    },
+    {
+      "name": "session-open",
+      "source": "./plugins/session-open",
+      "description": "A start-of-session routine: parked work, unscheduled critical todos, an ideas inbox, and slot accountability for today's calendar sessions."
     }
   ],
   "metadata": {
-    "description": "Workflow skills for Claude Code: skill-harvest, pots (todos + improvement backlog) and stack-it-right.",
-    "version": "1.1.0"
+    "description": "Workflow skills for Claude Code: skill-harvest, pots (todos + improvement backlog), stack-it-right and session-open.",
+    "version": "1.2.0"
   }
 }
