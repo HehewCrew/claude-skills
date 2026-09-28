@@ -9,10 +9,10 @@ A per-project list of **potential improvements**: ideas worth coming back to tha
 
 ## Where the pot lives
 
-One file per project: **`improve-pot.md` in the current project's memory directory**, the directory named in the system prompt's Memory section (for example `~/.claude/projects/<project-slug>/memory/improve-pot.md`). It is private to the user and never goes into the repository.
+One file per project, placed by the project's **pots mode**: the `Pots mode:` line in its root `CLAUDE.md`. The `todos-pot` skill's "Where it lives" section holds the full rule, the team-mode write rules and how to switch modes.
 
-- If the file does not exist, create it with the header below. Then add one pointer line to that directory's `MEMORY.md`: `- [Improvement pot](improve-pot.md) — potential improvements, read as the gate when todos-pot is called`.
-- If there is no memory directory (for example, a session with memory off), ask the user where to keep the pot rather than guessing.
+- **Lone wolf** (no line, or `Pots mode: lone wolf`): `improve-pot.md` in the current project's memory directory, the directory named in the system prompt's Memory section (for example `~/.claude/projects/<project-slug>/memory/improve-pot.md`). It is private to the user and never goes into the repository. If the file does not exist, create it with the header below, then add one pointer line to that directory's `MEMORY.md`: `- [Improvement pot](improve-pot.md) — potential improvements, read as the gate when todos-pot is called`. If there is no memory directory (for example, a session with memory off), ask the user where to keep the pot rather than guessing.
+- **Team** (`Pots mode: team`): `.claude/pots/improve-pot.md` at the repository root, shared through git. Create it with the header below if it does not exist. Write patches only (append a line, or edit one line in place), check `git fetch` first and say if you are behind, and never commit, pull or push on your own.
 
 ```markdown
 ---
@@ -40,6 +40,7 @@ metadata:
    ```markdown
    - [ ] **<the idea in one line>** *(<YYYY-MM-DD>, from <user|Claude>)* — <why it would help, and the context it came from, in one or two sentences>
    ```
+   - In team mode, `from` names the person: `from <git config user.name>` for the user's own idea, `from Claude (for <git user.name>)` for Claude's.
    - Use absolute dates.
    - Keep enough context that the entry makes sense weeks later without this conversation.
 5. **Confirm** in one line: what was saved, and under which topic.

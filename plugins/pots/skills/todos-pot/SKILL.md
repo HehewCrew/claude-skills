@@ -1,18 +1,41 @@
 ---
 name: todos-pot
-description: The current project's to-do list. It keeps a stored list of todos and, each time it is called, merges in the open items found in the project's own files, so nothing recorded anywhere is missed. Opens with the improvement-pot gate. Use when the user asks for their todos ("what are the todos", "what's left", "what do we have to do", /todos-pot), when they ask to add a todo ("add to todos", "todo: ..."), and when a piece of work closes with something still left for the user to do (see "Adding todos").
+description: The current project's to-do list. It keeps a stored list of todos and, each time it is called, merges in the open items found in the project's own files, so nothing recorded anywhere is missed. Opens with the improvement-pot gate. Use when the user asks for their todos ("what are the todos", "what's left", "what do we have to do", /todos-pot), when they ask to add a todo ("add to todos", "todo: ..."), when a piece of work closes with something still left for the user to do (see "Adding todos"), and when they ask to switch the pots between lone wolf (private, the default) and team mode (shared through the repository).
 ---
 
 # Todos pot
 
 A per-project to-do list. It combines two things: a **stored list** (todos said in chat, or left over when work closes) and a **fresh scan** of the project's own files, which is where most open work is actually recorded.
 
-## Where it lives
+## Where it lives: lone wolf or team mode
 
-One file per project: **`todos-pot.md` in the current project's memory directory**, the directory named in the system prompt's Memory section (for example `~/.claude/projects/<project-slug>/memory/todos-pot.md`). It is private and never goes into the repository.
+The project's root `CLAUDE.md` picks the mode with one line: `Pots mode: team`. No line, or `Pots mode: lone wolf`, means lone wolf. Read the line before every read or write of a pot. This rule covers every pot file: `todos-pot.md`, `improve-pot.md` and `skill-harvest.md`.
 
-- If the file does not exist, create it with the header below and add one pointer line to that directory's `MEMORY.md`: `- [Todos pot](todos-pot.md) — the project's stored todos, merged with a scan of its files when todos-pot is called`.
-- If there is no memory directory, ask the user where to keep it.
+| | Lone wolf (default) | Team |
+|---|---|---|
+| **Where** | the project's memory directory, named in the system prompt's Memory section (e.g. `~/.claude/projects/<project-slug>/memory/todos-pot.md`) | `.claude/pots/todos-pot.md` at the repository root |
+| **Who sees it** | only you; never goes into the repository | everyone with the repository, through git |
+| **Pointer** | one line in the memory directory's `MEMORY.md` | none needed |
+
+**Lone wolf:** if the file does not exist, create it with the header below and add one pointer line to that directory's `MEMORY.md`: `- [Todos pot](todos-pot.md) — the project's stored todos, merged with a scan of its files when todos-pot is called`. If there is no memory directory, ask the user where to keep it.
+
+**Team:** if the file does not exist, create it with the header below in `.claude/pots/`. Then follow these rules on every write:
+1. **Patch writes only.** Append one entry line, or edit one line in place with an exact-string edit (a tick, a `(planned: …)` mark). Never rewrite or reorder the whole file: whole-file saves are what turn teammates' edits into conflicts.
+2. **Check you are current first.** Run `git fetch` and compare with the upstream branch. If you are behind, say so in one line and offer to pull before writing. Don't pull on your own.
+3. **Never commit, pull or push on your own.** The pot edit travels with the user's next commit, like any other project file. When the work closes, remind them in one line that the pot changed.
+4. **Sign each entry.** New todos carry `owner: <git config user.name>` in their parenthesis, e.g. `*(2026-10-02, when: this week, owner: Amira)*`. The owner is who added it, unless the user names someone else.
+5. **After a pull, de-duplicate.** When one teammate edits a line (a tick, a `(planned: …)` mark) and another edits a line next to it, the union merge (below) keeps both versions of the edited line: the new one and the stale one. Identical edits on both sides merge cleanly and leave no duplicate. Two entries are the same todo when their **bold text** matches. Keep the more advanced one: `[x]` or `[-]` over `[ ]`, then the one with more marks (`planned:`, `done`). Delete the other and say so in one line. If both carry changes the other lacks, merge the marks into one line and show it.
+
+### Switching modes
+
+Only when the user asks ("switch the pots to team mode", "go lone wolf"). The switch moves every pot file, not just this one.
+
+- **Lone wolf → team:**
+  1. Move `todos-pot.md`, `improve-pot.md` and `skill-harvest.md` (those that exist) from the memory directory into `.claude/pots/`, unchanged, and delete their pointer lines from `MEMORY.md`.
+  2. Add this line to `.gitattributes` at the repository root, creating it if needed: `.claude/pots/*.md merge=union`. Each entry is one line, so a union merge keeps both teammates' new lines instead of stopping on a conflict.
+  3. Add `Pots mode: team` to the project's root `CLAUDE.md`.
+  4. Show the user what changed and that it's all ready to commit. Don't commit.
+- **Team → lone wolf:** copy the files from `.claude/pots/` into the memory directory, add their `MEMORY.md` pointers, set `Pots mode: lone wolf` (or remove the line), then `git rm` the `.claude/pots/` files and remove the `.gitattributes` line. Warn first: teammates lose the shared pots on their next pull, and they keep only the copies already on their disk.
 
 ```markdown
 ---
@@ -35,7 +58,7 @@ Entry format, under `## <topic>`:
 
 ### Step 1: the improvement-pot gate
 
-Read the project's `improve-pot.md` (the `improve-pot` skill's file, in the same memory directory) and count the open (`[ ]`) items across every topic.
+Read the project's `improve-pot.md` (the `improve-pot` skill's file, in the same place as `todos-pot.md` for the project's mode) and count the open (`[ ]`) items across every topic.
 
 - **None, or no file:** say nothing about it and go to step 2.
 - **One or more:** reply with `n potential improvement(s)` (for example `2 potential improvements`), then one bullet per item with a short description (a few words from the item's bold line). Nothing else: no explanation, no todos yet. Stop and wait.
@@ -45,7 +68,7 @@ Read the project's `improve-pot.md` (the `improve-pot` skill's file, in the same
 
 ### Step 2: gather the todos
 
-1. **The stored list:** every open item in `todos-pot.md`.
+1. **The stored list:** every open item in `todos-pot.md`. In team mode, show each item's `owner:`, and de-duplicate first (team rule 5).
 2. **Scan the project's files.** Read before listing; never answer from memory of an earlier call.
    - **Unchecked checkboxes** in the project's Markdown (`- [ ]`, and `[ ]` in table cells), found with Grep. Skip generated or vendored folders (`dist/`, `node_modules/`, `.venv/`, build output) and archived or published content.
    - **Planner and schedule files.** Rows not marked done that have a date, from today onwards, plus overdue ones.
@@ -82,7 +105,7 @@ Keep each line short. If the scan finds a very long tail of low-level open items
 
 - When a todo is done in this session, or the user says it's done, mark it `[x]` with *(done YYYY-MM-DD)*.
 - Items found by the scan are closed in their own file, following that project's conventions, not here.
-- Don't delete entries.
+- Don't delete entries (except a duplicate line left by a union merge, in team mode).
 
 ## Optional: session-start check for critical todos with no calendar slot
 

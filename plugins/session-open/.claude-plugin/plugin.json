@@ -1,6 +1,6 @@
 {
   "name": "session-open",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "One fixed start-of-session routine: parked work, critical todos with no calendar slot, an ideas inbox, and slot accountability - an ended calendar session not marked ✅ gets asked about, a live one opens with its task list.",
   "author": { "name": "HehewCrew" }
 }

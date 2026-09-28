@@ -12,7 +12,7 @@
     {
       "name": "pots",
       "source": "./plugins/pots",
-      "description": "A per-project to-do list that never forgets: stored todos merged with a fresh scan of the project's files, behind an improvement-pot gate; plus a ranking agent."
+      "description": "A per-project to-do list that never forgets: stored todos merged with a fresh scan of the project's files, behind an improvement-pot gate; private, or shared with your team through git; plus a ranking agent."
     },
     {
       "name": "stack-it-right",
@@ -26,7 +26,7 @@
     }
   ],
   "metadata": {
-    "description": "Workflow skills for Claude Code: skill-harvest, pots (todos + improvement backlog), stack-it-right and session-open.",
-    "version": "1.2.0"
+    "description": "Workflow skills for Claude Code: skill-harvest, pots (todos + improvement backlog, solo or team), stack-it-right and session-open.",
+    "version": "1.3.0"
   }
 }

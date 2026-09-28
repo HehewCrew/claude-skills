@@ -70,7 +70,7 @@ Then **recommend** the one or two to build first, with one line on why. Ask with
 
 ## Step 4: log, then build what was picked
 
-**The log.** Keep `skill-harvest.md` in the project's memory directory, so a declined idea is not proposed again. If the file does not exist, create it with frontmatter (`name: skill-harvest`, a one-line `description`, `metadata: type: project`), and add a pointer line to `MEMORY.md`. Append one line per candidate shown:
+**The log.** Keep `skill-harvest.md` in the project's memory directory, so a declined idea is not proposed again. If the file does not exist, create it with frontmatter (`name: skill-harvest`, a one-line `description`, `metadata: type: project`), and add a pointer line to `MEMORY.md`. **Team mode:** if the project's root `CLAUDE.md` has `Pots mode: team` (the `pots` plugin's shared mode), keep the log at `.claude/pots/skill-harvest.md` instead, with no pointer. Append lines only, add `· <git user.name>` at the end of each, and never commit on your own. Append one line per candidate shown:
 
 ```
 - 2026-09-25 · icon-kit (project skill) · built → .claude/skills/icon-kit/
