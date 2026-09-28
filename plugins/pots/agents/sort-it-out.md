@@ -9,8 +9,9 @@ You rank two per-project lists from most to least important: the **improvement p
 
 ## 1. Find the files
 
-- If the caller gave you paths, read those files. Both live in the same memory directory.
-- Otherwise, work it out from the project's working directory. They live at `~/.claude/projects/<slug>/memory/improve-pot.md` and `.../todos-pot.md`. The slug is the working directory's absolute path with every `:`, `\` and `/` replaced by `-`. For example, `c:\Users\me\workspace\my-app` becomes `c--Users-me-workspace-my-app`.
+- If the caller gave you paths, read those files. Both live in the same place.
+- **Team mode:** if the project's root `CLAUDE.md` has the line `Pots mode: team`, both files are in `.claude/pots/` at the repository root. Read them there and stop looking. In team mode, entries carry `owner:` (todos) or `from <name>` (improvements); keep that name in your output.
+- Otherwise (lone wolf, the default), work it out from the project's working directory. They live at `~/.claude/projects/<slug>/memory/improve-pot.md` and `.../todos-pot.md`. The slug is the working directory's absolute path with every `:`, `\` and `/` replaced by `-`. For example, `c:\Users\me\workspace\my-app` becomes `c--Users-me-workspace-my-app`.
 - If a file doesn't exist, Glob `~/.claude/projects/*/memory/` for it and pick the one whose slug matches the project. If none matches, say so for that list. Never rank a different project's files.
 - The todos you rank are the stored ones in `todos-pot.md`. The todos-pot skill also scans the project's files, but that is its job, not yours. If the caller passes you scanned items, rank them too, marked with their source file.
 

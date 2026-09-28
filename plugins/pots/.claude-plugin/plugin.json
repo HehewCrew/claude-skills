@@ -1,6 +1,6 @@
 {
   "name": "pots",
-  "version": "1.0.0",
-  "description": "A per-project to-do list that never forgets: every call merges the stored todos with a fresh scan of the project's own files, behind an improvement-pot gate. Plus an agent that ranks both lists.",
+  "version": "1.1.0",
+  "description": "A per-project to-do list that never forgets: every call merges the stored todos with a fresh scan of the project's own files, behind an improvement-pot gate. Two modes: lone wolf (private, the default) or team (the pots live in the repo and sync through git). Plus an agent that ranks both lists.",
   "author": { "name": "HehewCrew" }
 }

@@ -23,11 +23,13 @@ Run them all **before** answering the first request, whatever it is. Find the pr
    - **Now:** run `date "+%Y-%m-%dT%H:%M:%S%z"`. Use the calendar's timezone (from the calendar itself, or the user's `CLAUDE.md`).
    - List events from today 00:00 to 21 days ahead, in that timezone, ordered by start time, one page as large as the connector allows, no text filter. If the result is saved to a file, pull id, start, end and title (plus the description for today's project events) with a few lines of script; set `PYTHONIOENCODING=utf-8` for emoji titles. Don't read the file whole.
    - No connector? Say so in one line: step 3 shows its list unchecked, and step 5 is skipped.
-3. **Critical todos with no calendar slot.** If the memory directory has `todos-pot.md`, follow the `todos-pot` skill's session-start check, read fresh each time, using step 2's read instead of a new one. In short:
+3. **Critical todos with no calendar slot.** If the project has a `todos-pot.md`, follow the `todos-pot` skill's session-start check, read fresh each time, using step 2's read instead of a new one. In short:
    - pick open todos due within 7 days, overdue, or blocking a launch or hard deadline; skip ones waiting on a condition that hasn't happened ("after the launch");
    - todos marked `(planned: …)` are covered;
    - match the rest on meaning against the events;
    - list the uncovered ones and offer to plan them (draft each event, offer two or three free slots, create only what the user picks).
+   - *Where:* in the memory directory by default (lone wolf). If the project's root `CLAUDE.md` has `Pots mode: team`, it's `.claude/pots/todos-pot.md` in the repository, shared with teammates. Then list only the todos whose `owner:` is the user (their `git config user.name`) or that have no owner, since everyone's calendar is their own.
+   - *Ideas and calendars stay personal in both modes:* the ideas inbox (step 4) is always in the memory directory, and step 5 reads only the user's own calendar.
 4. **Ideas inbox.** If the memory directory has `ideas-inbox.md` with open `- [ ]` lines (ideas captured away from the computer, by a phone bot, a synced note or by hand):
    - brainstorm each in 2–3 lines: what it would be, what it's worth, what it costs; check the project first, so an idea already done or already a todo is said to be;
    - ask where each goes, with AskUserQuestion (one question per idea, at most four per call, recommended first): **Todo** (with a timeline), **Do now**, **Improvement pot**, **Drop**;

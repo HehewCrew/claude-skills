@@ -7,7 +7,7 @@ from real requirements and today's versions, not last year's.
 | Plugin | What it gives you | Try it |
 |---|---|---|
 | [skill-harvest](#skill-harvest) | Turns what a session learned into new skills, on your pick | `/skill-harvest` |
-| [pots](#pots) | A per-project to-do list that scans your files, plus an improvement backlog that gates it | "what are the todos?" |
+| [pots](#pots) | A per-project to-do list that scans your files, plus an improvement backlog that gates it; private or shared with your team | "what are the todos?" |
 | [stack-it-right](#stack-it-right) | A requirements-driven stack choice, checked live against current versions and pricing | "what stack should I use?" |
 | [session-open](#session-open) | A start-of-session routine with slot accountability: an ended calendar session not marked ✅ gets asked about | runs at session start · "what for today?" |
 
@@ -51,7 +51,23 @@ A per-project to-do list that never forgets.
 - **`sort-it-out`** (agent) ranks either list by impact, urgency and effort, read-only.
 - **Optional:** a session-start check that flags critical todos with no calendar slot.
 
-Both lists live in Claude Code's per-project memory directory, never in your repo.
+**Two modes, one line in the project's `CLAUDE.md`:**
+
+| | Lone wolf (default) | Team: `Pots mode: team` |
+|---|---|---|
+| Where the pots live | Claude Code's per-project memory directory, never in your repo | `.claude/pots/` in the repo |
+| Who sees them | only you | everyone who clones the repo |
+| How they sync | they don't | through your normal git commits and pulls |
+
+In team mode Claude writes one line at a time (never whole-file rewrites), signs each
+entry with your `git user.name`, checks `git fetch` before writing, and never commits or
+pulls for you. A `.gitattributes` line (`.claude/pots/*.md merge=union`) lets two
+teammates add todos to the same section without a merge conflict. If it leaves a stale
+copy of a line someone edited, the next todos call spots the same bold text twice and
+keeps the newer one. Say "switch the pots to
+team mode" (or "go lone wolf") and Claude moves the files and sets it up, ready for you
+to commit. `skill-harvest`'s log and `session-open`'s todo check follow the same mode.
+Ideas inboxes and calendars stay personal.
 
 ## stack-it-right
 
