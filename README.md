@@ -10,6 +10,7 @@ from real requirements and today's versions, not last year's.
 | [pots](#pots) | A per-project to-do list that scans your files, plus an improvement backlog that gates it; private or shared with your team | "what are the todos?" |
 | [stack-it-right](#stack-it-right) | A requirements-driven stack choice, checked live against current versions and pricing | "what stack should I use?" |
 | [session-open](#session-open) | A start-of-session routine with slot accountability: an ended calendar session not marked ✅ gets asked about | runs at session start · "what for today?" |
+| [voice-over-chain](#voice-over-chain) | An Audacity voice-over chain derived from measurements of your own take, simulated, then verified on the exported file | "check my recording" · "is this ready for Resolve?" |
 
 ## Install
 
@@ -21,6 +22,7 @@ Inside Claude Code:
 /plugin install pots@claude-skills
 /plugin install stack-it-right@claude-skills
 /plugin install session-open@claude-skills
+/plugin install voice-over-chain@claude-skills
 ```
 
 Install only the ones you want. Or copy a skill folder from `plugins/<plugin>/skills/`
@@ -95,6 +97,23 @@ Events are matched to the project by a `Calendar keyword:` line in its `CLAUDE.m
 the folder name. **Setup:** add *"Before answering the first request of every session, run
 the `session-open` skill."* to your `CLAUDE.md`, so it runs even when the first request
 doesn't look like it needs it.
+
+## voice-over-chain
+
+A voice-over chain is only right for one voice, one mic and one room, so this skill
+measures all three instead of copying tutorial presets. You record an ~80 s test take
+(real script lines + 30 s of room tone); a bundled script (`vo_measure.py`, ffmpeg only)
+reports the speech levels, the room noise and its spectrum (hiss, murmur or mains hum),
+the peak-to-loudness ratio and what the loudest peaks are made of. Every Audacity step
+(noise reduction, high-pass, loudness, compressor, limiter) gets a value **with the number
+it came from**, the chain is **simulated on your take**, you run it in Audacity, and the
+exported file is **measured again**: loudness on two speakers, true peak, clipping, and
+whether every pause got cut.
+
+- **Traps it knows:** Audacity's limiter output adds make-up gain unless it equals the
+  threshold; "treat mono as dual-mono" moves a mono file 3 dB; the Amplify slider caps at
+  50 dB; Audacity 4.0 has no macros (it uses effect presets instead).
+- **Needs:** ffmpeg on PATH and Python 3. It can't hear: tone is your call, levels are measured.
 
 ## Works with (optional)
 

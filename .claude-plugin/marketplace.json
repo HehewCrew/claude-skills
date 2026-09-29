@@ -23,10 +23,15 @@
       "name": "session-open",
       "source": "./plugins/session-open",
       "description": "A start-of-session routine: parked work, unscheduled critical todos, an ideas inbox, and slot accountability for today's calendar sessions."
+    },
+    {
+      "name": "voice-over-chain",
+      "source": "./plugins/voice-over-chain",
+      "description": "Locks a voice-over's Audacity processing chain from measurements of your own test take (ffmpeg), simulates it, and checks what Audacity actually produced."
     }
   ],
   "metadata": {
-    "description": "Workflow skills for Claude Code: skill-harvest, pots (todos + improvement backlog, solo or team), stack-it-right and session-open.",
-    "version": "1.3.0"
+    "description": "Workflow skills for Claude Code: skill-harvest, pots (todos + improvement backlog, solo or team), stack-it-right, session-open and voice-over-chain.",
+    "version": "1.4.0"
   }
 }
