@@ -65,6 +65,7 @@ Read the project's `improve-pot.md` (the `improve-pot` skill's file, in the same
   - "skip improvement", or a plain "skip" → go to step 2 and don't mention the pot again this session.
   - Anything else about the pot ("show them", "let's do those") → work on the pot items as asked.
 - If the user's message calling todos already says "skip improvement" or "skip", pass the gate silently.
+- **The gate opens once per session.** Once its line has been shown, a reply that moves on without mentioning the pot ("go ahead", a new request, a pick from a list) counts as "skip": go to step 2 and don't show the gate again this session, including when a session-start routine opens a later work slot.
 
 ### Step 2: gather the todos
 

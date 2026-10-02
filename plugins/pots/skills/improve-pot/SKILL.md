@@ -49,7 +49,7 @@ Saving is quick and does not interrupt the current task. Do not start working on
 
 ## Where it is read
 
-**Only by the `todos-pot` skill**, as its opening gate (step 1 there): `n potential improvement(s)`, one short bullet per open item, then wait for "skip". **Brainstorming skills do not read the pot**: it stays a deliberate backlog, not a source of ideas to re-pitch. The pot is not read at any other time.
+**Only by the `todos-pot` skill**, as its opening gate (step 1 there): `n potential improvement(s)`, one short bullet per open item, then wait for "skip" (or any reply that moves on); it shows once per session. **Brainstorming skills do not read the pot**: it stays a deliberate backlog, not a source of ideas to re-pitch. The pot is not read at any other time.
 
 ## Closing items
 

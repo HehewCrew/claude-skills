@@ -88,7 +88,7 @@ Ask with AskUserQuestion: **Done** / **Not done, continue it**. With several `OV
 <2–3 lines in your own words, from the event description: what the session is for, and its "done when" if it has one>
 ```
 
-**2. The todos.** With the `pots` plugin: run `todos-pot` Step 1, the improvement-pot gate, exactly (if there are open improvement items, show the header, then only the gate line and its bullets, and wait for "skip"), then its Step 2 to gather the stored todos plus the file scan. Without it: gather open checkboxes and "Open" sections from the project's files.
+**2. The todos.** With the `pots` plugin: run `todos-pot` Step 1, the improvement-pot gate, exactly (if there are open improvement items, show the header, then only the gate line and its bullets, and wait for "skip" or any reply that moves on; show the gate once per session, so a later slot goes straight to the todos), then its Step 2 to gather the stored todos plus the file scan. Without it: gather open checkboxes and "Open" sections from the project's files.
 
 **3. The task list.** Merge:
 
