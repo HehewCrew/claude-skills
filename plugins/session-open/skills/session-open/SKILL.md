@@ -1,6 +1,6 @@
 ---
 name: session-open
-description: The start of every session, in any project, as one fixed procedure before the first request - parked (UNDONE) work, critical todos with no calendar slot, an ideas inbox, and today's calendar slots for the project (an ended slot not marked ✅ gets "is it done?", an ongoing or later one gets an offer to start it, a live one opens with its task list). One calendar read covers all of it. Reports every check even when it finds nothing. Use at the start of every session, however small the first request looks, and when the user asks "did you run the start checks?" or invokes /session-open. Its "Today's slots" section is also what what-for-today runs mid-day.
+description: The start of every session, in any project, as one fixed procedure before the first request - parked (UNDONE) work, critical todos with no calendar slot, an ideas inbox, and today's calendar slots for the project (an ended slot not marked ✅ gets "is it done?", an ongoing or later one gets an offer to start it, a live one opens with its task list), plus this project's share and open points in a shared weekly plan when one exists. One calendar read covers all of it. Reports every check even when it finds nothing. Use at the start of every session, however small the first request looks, and when the user asks "did you run the start checks?" or invokes /session-open. Its "Today's slots" section is also what what-for-today runs mid-day.
 ---
 
 # Session open
@@ -11,7 +11,7 @@ The start-of-session checks as one procedure with one short report, so none is s
 
 - **Make it run every session:** add to your `CLAUDE.md` (global `~/.claude/CLAUDE.md` for every project): *"Before answering the first request of every session, run the `session-open` skill."* Skills trigger on their description, and a first request that looks small or unrelated won't match it; the line makes it unconditional.
 - **A calendar connector** (e.g. Google Calendar in claude.ai's connector settings) for steps 3 and 5. Without one, those steps say so in one line and the rest still runs.
-- **Optional companions:** the `pots` plugin (todos-pot, improve-pot) for step 3 and the task list; an ideas inbox for step 4.
+- **Optional companions:** the `pots` plugin (todos-pot, improve-pot) for step 3 and the task list; an ideas inbox for step 4; a shared weekly plan for step 6 (format below).
 
 ## Steps
 
@@ -35,15 +35,17 @@ Run them all **before** answering the first request, whatever it is. Find the pr
    - ask where each goes, with AskUserQuestion (one question per idea, at most four per call, recommended first): **Todo** (with a timeline), **Do now**, **Improvement pot**, **Drop**;
    - tick each line with its destination, e.g. `- [x] … → todos (2026-09-27)` or `- [-] … → dropped`. Don't delete lines.
 5. **Today's slots:** classify the project's events for today (below).
-6. **Report**, short, above everything else. Always name all four checks, including the empty ones, so the user can see they ran:
+6. **Weekly plan (optional).** If a shared weekly plan exists (default `~/.claude/weekly-plan.md`, or the path the user's `CLAUDE.md` names), read the current week's section: this project's share and hours left, and any open point that concerns this project (a request from another project, a held session). Report them in the line; act on a request only with the user. No file: skip this check silently and leave it out of the report.
+   - *Format,* kept by hand, by a planner skill or by any session that plans slots: one `## Week of <start> – <end>` section per week with a **split** table (project · share · planned · left), a **days** table (day · hours used / budget · events) and an **open points** list. Projects across the user's folders read and update the same file, so one project can leave a note for another.
+7. **Report**, short, above everything else. Always name every check that ran, including the empty ones, so the user can see they ran:
    ```
-   Session check: no parked work · 0 critical todos unplanned · no ideas waiting · today: 1 slot ended, not marked done
+   Session check: no parked work · 0 critical todos unplanned · no ideas waiting · today: 1 slot ended, not marked done · week: 3 h of 8 h left; another project asks for spare hours
    ```
    Then run the slot cases (B, then C or D) before answering the request. Case A (no slot) is just the report line.
 
 ## Today's slots
 
-`what-for-today` ("what for today?" or "start session" mid-day) runs this section on its own: step 2's read (today only is enough), then this section. Skip steps 1, 3 and 4.
+`what-for-today` ("what for today?" or "start session" mid-day) runs this section on its own: step 2's read (today only is enough), then this section. Skip steps 1, 3, 4 and 6.
 
 ### Classify
 

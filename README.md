@@ -126,6 +126,7 @@ Nothing here needs another skill to run. These add to them if you have them:
 | stack-it-right | An `ask-question` skill | Nothing extra: its question rules are already built into stack-it-right | – |
 | session-open | A calendar connector | Critical-todo check and slot accountability (without it, those two checks say so and are skipped) | Google Calendar through claude.ai's connector settings, or any calendar MCP server |
 | session-open | The pots plugin | The critical-todos check and the todos in the session task list | This repo: `pots@claude-skills` |
+| session-open | A shared weekly plan file | The week check: this project's hours left and notes left by other projects | `~/.claude/weekly-plan.md`, kept by hand or by a planner skill (format in the skill) |
 
 ## License
 
