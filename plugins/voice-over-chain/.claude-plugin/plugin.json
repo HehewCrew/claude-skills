@@ -1,6 +1,6 @@
 {
   "name": "voice-over-chain",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Locks a voice-over's Audacity processing chain from measurements of your own test take (ffmpeg), simulates it, and checks what Audacity actually produced: loudness, true peak, clipping, cut pauses.",
   "author": { "name": "HehewCrew" }
 }

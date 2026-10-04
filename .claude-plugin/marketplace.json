@@ -32,6 +32,6 @@
   ],
   "metadata": {
     "description": "Workflow skills for Claude Code: skill-harvest, pots (todos + improvement backlog, solo or team), stack-it-right, session-open and voice-over-chain.",
-    "version": "1.4.0"
+    "version": "1.4.1"
   }
 }
