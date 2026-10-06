@@ -28,10 +28,15 @@
       "name": "voice-over-chain",
       "source": "./plugins/voice-over-chain",
       "description": "Locks a voice-over's Audacity processing chain from measurements of your own test take (ffmpeg), simulates it, and checks what Audacity actually produced."
+    },
+    {
+      "name": "print-svg",
+      "source": "./plugins/print-svg",
+      "description": "Print-ready SVG lettering and shapes for 3D printing: font matched from rendered drafts, outlined text fitted to the plate, real stroke width checked against the nozzle."
     }
   ],
   "metadata": {
-    "description": "Workflow skills for Claude Code: skill-harvest, pots (todos + improvement backlog, solo or team), stack-it-right, session-open and voice-over-chain.",
-    "version": "1.4.1"
+    "description": "Workflow skills for Claude Code: skill-harvest, pots (todos + improvement backlog, solo or team), stack-it-right, session-open, voice-over-chain and print-svg.",
+    "version": "1.5.0"
   }
 }

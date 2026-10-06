@@ -1,0 +1,6 @@
+{
+  "name": "print-svg",
+  "version": "1.0.0",
+  "description": "Print-ready SVG lettering and shapes for 3D printing: a font matched to the customer's reference from rendered drafts, outlined text fitted to the plate, filled-ring shapes, real stroke width against the nozzle, and thickening that keeps letters open.",
+  "author": { "name": "HehewCrew" }
+}

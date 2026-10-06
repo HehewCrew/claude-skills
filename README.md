@@ -11,6 +11,7 @@ from real requirements and today's versions, not last year's.
 | [stack-it-right](#stack-it-right) | A requirements-driven stack choice, checked live against current versions and pricing | "what stack should I use?" |
 | [session-open](#session-open) | A start-of-session routine with slot accountability: an ended calendar session not marked ✅ gets asked about | runs at session start · "what for today?" |
 | [voice-over-chain](#voice-over-chain) | An Audacity voice-over chain derived from measurements of your own take, simulated, then verified on the exported file | "check my recording" · "is this ready for Resolve?" |
+| [print-svg](#print-svg) | SVG lettering and shapes a slicer imports and a 0.4 mm nozzle prints, matched to a customer's reference | "find a close font to this" · "build the SVG with this text" |
 
 ## Install
 
@@ -23,6 +24,7 @@ Inside Claude Code:
 /plugin install stack-it-right@claude-skills
 /plugin install session-open@claude-skills
 /plugin install voice-over-chain@claude-skills
+/plugin install print-svg@claude-skills
 ```
 
 Install only the ones you want. Or copy a skill folder from `plugins/<plugin>/skills/`
@@ -114,6 +116,17 @@ whether every pause got cut.
   threshold; "treat mono as dual-mono" moves a mono file 3 dB; the Amplify slider caps at
   50 dB; Audacity 4.0 has no macros (it uses effect presets instead).
 - **Needs:** ffmpeg on PATH and Python 3. It can't hear: tone is your call, levels are measured.
+
+## print-svg
+
+For custom 3D-printed pieces (a name tag, a keychain phrase, a heart, a monogram) in Bambu Studio, PrusaSlicer or Orca.
+
+- **The font comes from drafts, not memory:** it renders the customer's real text in 10–15 open-licence fonts next to their reference photo, and names the closest by the letterforms that match.
+- **Print-ready by construction:** text is outlined (no font needed in the slicer), fitted to the plate around the ring hole, and every shape is a filled ring, since slicers ignore SVG strokes.
+- **Printability you can trust:** the real stroke width (2 × area / perimeter, not a bounding box that counts the slant) is checked against two nozzle lines; letter spacing is shown as a trade against size; thickening reports when a letter's opening closes.
+- Says first when the slicer's own text tool is the simpler answer.
+
+Ships two scripts (`build_plate.py`, `font_sheet.py`); needs `uharfbuzz fonttools shapely pillow numpy`, installed into a scratch folder.
 
 ## Works with (optional)
 
