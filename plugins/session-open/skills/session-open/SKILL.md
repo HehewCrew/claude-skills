@@ -1,6 +1,6 @@
 ---
 name: session-open
-description: The start of every session, in any project, as one fixed procedure before the first request - parked (UNDONE) work, critical todos with no calendar slot, an ideas inbox, and today's calendar slots for the project (an ended slot not marked ✅ gets "is it done?", an ongoing or later one gets an offer to start it, a live one opens with its task list), plus this project's share and open points in a shared weekly plan when one exists. One calendar read covers all of it. Reports every check even when it finds nothing. Use at the start of every session, however small the first request looks, and when the user asks "did you run the start checks?" or invokes /session-open. Its "Today's slots" section is also what what-for-today runs mid-day.
+description: The start of every session, in any project, as one fixed procedure before the first request - parked (UNDONE) work, critical todos with no calendar slot, an ideas inbox, and today's calendar slots for the project (an ended slot not marked ✅ gets "is it done?", an ongoing or later one gets an offer to start it, a live one opens with its task list), slots from the past 7 days that ended without ✅, plus this project's share and open points in a shared weekly plan when one exists. One calendar read covers all of it. Reports every check even when it finds nothing. Use at the start of every session, however small the first request looks, and when the user asks "did you run the start checks?" or invokes /session-open. Its "Today's slots" section is also what what-for-today runs mid-day.
 ---
 
 # Session open
@@ -21,7 +21,7 @@ Run them all **before** answering the first request, whatever it is. Find the pr
    - *Convention:* when the user says to park something ("mark this undone", "park it"), save a memory named `undone-<topic>.md` with the state and the steps to resume, and index it as `- ⏸️ UNDONE — [<title>](undone-<topic>.md) — <hook>`. Delete both when the work is finished.
 2. **One calendar read, for steps 3 and 5.**
    - **Now:** run `date "+%Y-%m-%dT%H:%M:%S%z"`. Use the calendar's timezone (from the calendar itself, or the user's `CLAUDE.md`).
-   - List events from today 00:00 to 21 days ahead, in that timezone, ordered by start time, one page as large as the connector allows, no text filter. If the result is saved to a file, pull id, start, end and title (plus the description for today's project events) with a few lines of script; set `PYTHONIOENCODING=utf-8` for emoji titles. Don't read the file whole.
+   - List events from **7 days ago** 00:00 to 21 days ahead (the past week feeds step 5a), in that timezone, ordered by start time, one page as large as the connector allows, no text filter. If the result is saved to a file, pull id, start, end and title (plus the description for today's project events) with a few lines of script; set `PYTHONIOENCODING=utf-8` for emoji titles. Don't read the file whole.
    - No connector? Say so in one line: step 3 shows its list unchecked, and step 5 is skipped.
 3. **Critical todos with no calendar slot.** If the project has a `todos-pot.md`, follow the `todos-pot` skill's session-start check, read fresh each time, using step 2's read instead of a new one. In short:
    - pick open todos due within 7 days, overdue, or blocking a launch or hard deadline; skip ones waiting on a condition that hasn't happened ("after the launch");
@@ -35,11 +35,12 @@ Run them all **before** answering the first request, whatever it is. Find the pr
    - ask where each goes, with AskUserQuestion (one question per idea, at most four per call, recommended first): **Todo** (with a timeline), **Do now**, **Improvement pot**, **Drop**;
    - tick each line with its destination, e.g. `- [x] … → todos (2026-09-27)` or `- [-] … → dropped`. Don't delete lines.
 5. **Today's slots:** classify the project's events for today (below).
+5a. **Past slots not marked done.** From step 2's read, take the project's events (same keyword, 30 min or more, not all-day) that **ended before today, in the last 7 days**, and whose title doesn't start with `✅`. Report them in the line (`past: 1 slot not marked done`) and ask about them in the same question as case B (one each, earliest first, **Done** / **Not done**). **Done** → `✅ ` + the exact title, without notifying attendees, as in case B. **Not done** → offer to pick it up now (case C with its description) or to replan it; never move or delete it unasked. A slot that ended on an earlier day is otherwise never asked about.
 6. **Weekly plan (optional).** If a shared weekly plan exists (default `~/.claude/weekly-plan.md`, or the path the user's `CLAUDE.md` names), read the current week's section: this project's share and hours left, and any open point that concerns this project (a request from another project, a held session). Report them in the line; act on a request only with the user. No file: skip this check silently and leave it out of the report.
    - *Format,* kept by hand, by a planner skill or by any session that plans slots: one `## Week of <start> – <end>` section per week with a **split** table (project · share · planned · left), a **days** table (day · hours used / budget · events) and an **open points** list. Projects across the user's folders read and update the same file, so one project can leave a note for another.
 7. **Report**, short, above everything else. Always name every check that ran, including the empty ones, so the user can see they ran:
    ```
-   Session check: no parked work · 0 critical todos unplanned · no ideas waiting · today: 1 slot ended, not marked done · week: 3 h of 8 h left; another project asks for spare hours
+   Session check: no parked work · 0 critical todos unplanned · no ideas waiting · today: 1 slot ended, not marked done · past: none unmarked · week: 3 h of 8 h left; another project asks for spare hours
    ```
    Then run the slot cases (B, then C or D) before answering the request. Case A (no slot) is just the report line.
 
@@ -129,7 +130,7 @@ Ask with AskUserQuestion: **Start now** / **Not yet**.
 
 - **Never skip a check because the request is small or unrelated.** The request's size decides nothing here.
 - **A `(planned: …)` mark on some todos doesn't cover the others.** Match every unmarked critical todo against the read.
-- **The calendar is only ever written in case B → Done, and only the title changes.**
+- **The calendar is only ever written in case B → Done and step 5a → Done, and only the title changes.**
 - **Never read or rank another project's todos, and never match another project's events.** The project's keyword decides which events count.
 - **Keep the report short.** No full todo list outside case C, and no plan unless the user says yes.
 - **Once per session** for the full procedure. If the user asks again later, re-run it and say whether the answer changed. "Start session" mid-day runs only "Today's slots".
