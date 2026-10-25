@@ -12,6 +12,7 @@ from real requirements and today's versions, not last year's.
 | [session-open](#session-open) | A start-of-session routine with slot accountability: an ended calendar session not marked ✅ gets asked about | runs at session start · "what for today?" |
 | [voice-over-chain](#voice-over-chain) | An Audacity voice-over chain derived from measurements of your own take, simulated, then verified on the exported file | "check my recording" · "is this ready for Resolve?" |
 | [print-svg](#print-svg) | SVG lettering and shapes a slicer imports and a 0.4 mm nozzle prints, matched to a customer's reference | "find a close font to this" · "build the SVG with this text" |
+| [replacement-part](#replacement-part) | A broken real part copied into a printable model from photos and a tape measure, fit-tested before the real material | "make a 3D model of this" · "copy this part" |
 
 ## Install
 
@@ -25,6 +26,7 @@ Inside Claude Code:
 /plugin install session-open@claude-skills
 /plugin install voice-over-chain@claude-skills
 /plugin install print-svg@claude-skills
+/plugin install replacement-part@claude-skills
 ```
 
 Install only the ones you want. Or copy a skill folder from `plugins/<plugin>/skills/`
@@ -128,6 +130,18 @@ For custom 3D-printed pieces (a name tag, a keychain phrase, a heart, a monogram
 
 Ships two scripts (`build_plate.py`, `font_sheet.py`); needs `uharfbuzz fonttools shapely pillow numpy`, installed into a scratch folder.
 
+## replacement-part
+
+For a lid, cover, lens, bracket or shell that broke, from the user's photos and a tape measure, printed on a Bambu Lab printer.
+
+- **Fit first, shape second:** it asks only for the dimensions that decide the fit (outer size, hole-to-hole, holes, wall) and what the part does, which picks the material (light through it, heat, children, outdoors).
+- **Measurements from people who aren't CAD users:** side-section sketches to confirm the profile isn't read upside down, the model rendered with arrows and labels when a word doesn't land, and shape options rendered side by side.
+- **Parametric and rounded:** a revolved profile with cuts, every dimension marked measured or estimated; edges rounded in 2D and then with a Blender bevel, with the traps that make a bevel silently do nothing.
+- **Printable near the plate's size:** 45° ledges instead of steps, normal supports instead of tree supports and no brim (the slicer refuses them at the plate's edge), and an estimate sliced with the real supports and walls.
+- **A fit test before the real material:** a thin ring with the exact outline and holes, pinned onto the original or the mounting.
+
+Ships `bevel.py` (Blender, headless), `slice_with.py` (Bambu Studio slicing with process overrides) and a worked example (`revolved_lid.py`). Needs the bambu-studio-ai skill's Python environment (`manifold3d`, `trimesh`) and Blender 4.2+.
+
 ## Works with (optional)
 
 Nothing here needs another skill to run. These add to them if you have them:
@@ -139,6 +153,7 @@ Nothing here needs another skill to run. These add to them if you have them:
 | stack-it-right | An `ask-question` skill | Nothing extra: its question rules are already built into stack-it-right | – |
 | session-open | A calendar connector | Critical-todo check and slot accountability (without it, those two checks say so and are skipped) | Google Calendar through claude.ai's connector settings, or any calendar MCP server |
 | session-open | The pots plugin | The critical-todos check and the todos in the session task list | This repo: `pots@claude-skills` |
+| replacement-part | [bambu-studio-ai](https://github.com/heyixuan2/bambu-studio-ai) | Its Python environment, analyze/preview scripts and Bambu Studio slicing, which `slice_with.py` builds on (required for slicing; modelling needs only `manifold3d` + `trimesh`) | GitHub, MIT |
 | session-open | A shared weekly plan file | The week check: this project's hours left and notes left by other projects | `~/.claude/weekly-plan.md`, kept by hand or by a planner skill (format in the skill) |
 
 ## License

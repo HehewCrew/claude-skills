@@ -33,10 +33,15 @@
       "name": "print-svg",
       "source": "./plugins/print-svg",
       "description": "Print-ready SVG lettering and shapes for 3D printing: font matched from rendered drafts, outlined text fitted to the plate, real stroke width checked against the nozzle."
+    },
+    {
+      "name": "replacement-part",
+      "source": "./plugins/replacement-part",
+      "description": "Copies a broken real-world part into a printable 3D model from photos and tape measurements, with a fit test before the real material."
     }
   ],
   "metadata": {
-    "description": "Workflow skills for Claude Code: skill-harvest, pots (todos + improvement backlog, solo or team), stack-it-right, session-open, voice-over-chain and print-svg.",
-    "version": "1.5.1"
+    "description": "Workflow skills for Claude Code: skill-harvest, pots (todos + improvement backlog, solo or team), stack-it-right, session-open, voice-over-chain, print-svg and replacement-part.",
+    "version": "1.6.0"
   }
 }

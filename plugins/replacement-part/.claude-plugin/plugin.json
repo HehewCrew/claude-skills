@@ -1,0 +1,6 @@
+{
+  "name": "replacement-part",
+  "version": "1.0.0",
+  "description": "Copies a broken real-world part into a printable 3D model from photos and tape measurements: fit-first measuring with diagrams and annotated renders, a parametric revolved-profile model, rounded edges for parts the public touches, near-plate-size printing (no tree supports, no brim, 45° ledges), slicing with supports, and a cheap fit test first.",
+  "author": { "name": "HehewCrew" }
+}
