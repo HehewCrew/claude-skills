@@ -1,0 +1,6 @@
+{
+  "name": "print-ready",
+  "version": "1.0.0",
+  "description": "Turns a set of 3D models into print-ready Bambu Studio projects and a real cost: sizes from one reference dimension, one-colour plates as 3MF, per-height settings (a heavier base) baked into the project so it opens and prints with nothing to configure, and cost per piece and set with what a price earns per printer hour.",
+  "author": { "name": "HehewCrew" }
+}

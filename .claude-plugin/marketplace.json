@@ -38,6 +38,11 @@
       "name": "replacement-part",
       "source": "./plugins/replacement-part",
       "description": "Copies a broken real-world part into a printable 3D model from photos and tape measurements, with a fit test before the real material."
+    },
+    {
+      "name": "print-ready",
+      "source": "./plugins/print-ready",
+      "description": "Print-ready Bambu Studio projects and real print costs: sizes, 3MF plates, a heavier base baked into the file, cost per piece and set, and what a price earns per printer hour."
     }
   ],
   "metadata": {

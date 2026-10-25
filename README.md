@@ -13,6 +13,7 @@ from real requirements and today's versions, not last year's.
 | [voice-over-chain](#voice-over-chain) | An Audacity voice-over chain derived from measurements of your own take, simulated, then verified on the exported file | "check my recording" · "is this ready for Resolve?" |
 | [print-svg](#print-svg) | SVG lettering and shapes a slicer imports and a 0.4 mm nozzle prints, matched to a customer's reference | "find a close font to this" · "build the SVG with this text" |
 | [replacement-part](#replacement-part) | A broken real part copied into a printable model from photos and a tape measure, fit-tested before the real material | "make a 3D model of this" · "copy this part" |
+| [print-ready](#print-ready) | Bambu Studio projects that open and print with nothing to configure (a heavier base baked in), and a cost per piece and set that says what a price earns per printer hour | "the 3mf ready to use" · "how much does a set cost to print?" |
 
 ## Install
 
@@ -27,6 +28,7 @@ Inside Claude Code:
 /plugin install voice-over-chain@claude-skills
 /plugin install print-svg@claude-skills
 /plugin install replacement-part@claude-skills
+/plugin install print-ready@claude-skills
 ```
 
 Install only the ones you want. Or copy a skill folder from `plugins/<plugin>/skills/`
@@ -142,6 +144,17 @@ For a lid, cover, lens, bracket or shell that broke, from the user's photos and 
 
 Ships `bevel.py` (Blender, headless), `slice_with.py` (Bambu Studio slicing with process overrides) and a worked example (`revolved_lid.py`). Needs the bambu-studio-ai skill's Python environment (`manifold3d`, `trimesh`) and Blender 4.2+.
 
+## print-ready
+
+For a set of models sold in sizes or variants (a chess set, a product line) and printed on a Bambu Lab printer.
+
+- **Sizes from one reference dimension**, measured from the files, and one-colour plates written as **3MF**: detailed STL plates pass GitHub's 100 MB limit.
+- **Heavier pieces, measured before recommended:** base heights and infills sliced side by side (weight and time), with the overhead a split estimate adds removed.
+- **Files that need no setup:** a height-range modifier (e.g. the bottom 15 mm at 40 % infill) written into the project and re-sliced with the project's own settings, including the trap that makes Bambu ignore it silently (`<object id="1">`).
+- **Costs that hold up:** filament, electricity (draw, not the power-supply rating), a machine-hour floor, a savings reserve, and what a selling price earns per printer hour; a set / half set / single-piece price ladder.
+
+Ships `plate.py`, `make_ready.py` and `cost.py`. Needs the bambu-studio-ai skill's Python environment and Bambu Studio installed.
+
 ## Works with (optional)
 
 Nothing here needs another skill to run. These add to them if you have them:
@@ -154,6 +167,8 @@ Nothing here needs another skill to run. These add to them if you have them:
 | session-open | A calendar connector | Critical-todo check and slot accountability (without it, those two checks say so and are skipped) | Google Calendar through claude.ai's connector settings, or any calendar MCP server |
 | session-open | The pots plugin | The critical-todos check and the todos in the session task list | This repo: `pots@claude-skills` |
 | replacement-part | [bambu-studio-ai](https://github.com/heyixuan2/bambu-studio-ai) | Its Python environment, analyze/preview scripts and Bambu Studio slicing, which `slice_with.py` builds on (required for slicing; modelling needs only `manifold3d` + `trimesh`) | GitHub, MIT |
+| print-ready | [bambu-studio-ai](https://github.com/heyixuan2/bambu-studio-ai) | Its Python environment and `slice.py`, which give the projects `make_ready.py` finishes (required) | GitHub, MIT |
+| print-ready | The replacement-part plugin | `slice_with.py`, for slicing with supports or other process overrides | This repo: `replacement-part@claude-skills` |
 | session-open | A shared weekly plan file | The week check: this project's hours left and notes left by other projects | `~/.claude/weekly-plan.md`, kept by hand or by a planner skill (format in the skill) |
 
 ## License
